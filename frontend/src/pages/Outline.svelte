@@ -314,10 +314,10 @@
   </div>
   {#if !hasOutline}
     <!-- 空状态 -->
-    <div class="text-center py-14 text-base-content/50">
-      <div class="text-5xl mb-3">📝</div>
+    <div class="text-center py-14 text-base-content/65">
+      <div class="text-5xl mb-3"></div>
       <p class="text-base mb-1">{$t('outline.empty.title')}</p>
-      <p class="text-sm text-base-content/35 mb-6">{$t('outline.empty.hint')}</p>
+      <p class="text-sm text-base-content/65 mb-6">{$t('outline.empty.hint')}</p>
       <button class="btn btn-outline btn-sm" on:click={() => showImport = !showImport} disabled={$taskRunning}>{$t('outline.btn.import')}</button>
     </div>
 
@@ -325,7 +325,7 @@
       <div class="card bg-base-200">
         <div class="card-body p-4 gap-2">
           <h3 class="card-title text-base">{$t('outline.import.title')}</h3>
-          <p class="text-xs text-base-content/50">{$t('outline.import.hint')}</p>
+          <p class="text-xs text-base-content/65">{$t('outline.import.hint')}</p>
           <textarea class="textarea w-full h-48 text-sm font-serif" bind:value={importContent} on:input={() => importPreview = null} placeholder={$t('outline.import.placeholder')} disabled={$taskRunning}></textarea>
           <div class="flex justify-end gap-2">
             <button class="btn btn-ghost btn-xs" on:click={() => { showImport = false; importContent = ''; importPreview = null; }}>{$t('common.cancel')}</button>
@@ -338,14 +338,14 @@
               <div class="max-h-64 overflow-y-auto space-y-1">
                 {#each importPreview as ch (ch.num)}
                   <div class="bg-base-100/50 rounded p-2 text-xs flex items-baseline gap-2">
-                    <span class="font-bold text-base-content/40 w-8 shrink-0">{ch.num}</span>
+                    <span class="font-bold text-base-content/65 w-8 shrink-0">{ch.num}</span>
                     <span class="font-medium shrink-0">{ch.title}</span>
-                    <span class="text-base-content/40 shrink-0">{$t('outline.import.words', { n: ch.word_count })}</span>
-                    <span class="text-base-content/50 truncate">{ch.preview}</span>
+                    <span class="text-base-content/65 shrink-0">{$t('outline.import.words', { n: ch.word_count })}</span>
+                    <span class="text-base-content/65 truncate">{ch.preview}</span>
                   </div>
                 {/each}
               </div>
-              <p class="text-xs text-base-content/50">{$t('outline.import.startHint')}</p>
+              <p class="text-xs text-base-content/65">{$t('outline.import.startHint')}</p>
               <div class="flex justify-end">
                 <button class="btn btn-success btn-xs" on:click={startImport} disabled={$taskRunning || importPreview.length === 0}>{$t('outline.import.start')}</button>
               </div>
@@ -377,7 +377,7 @@
                   {#if s.description}
                     <div class="text-sm text-base-content/70 mt-1">{s.description}</div>
                   {/if}
-                  <div class="text-xs text-base-content/50 mt-1">
+                  <div class="text-xs text-base-content/65 mt-1">
                     {$t('outline.charSuggestions.line', { chapter: s.chapter_num, role: s.role || $t('outline.charSuggestions.noRole') })}
                   </div>
                 </div>
@@ -396,11 +396,11 @@
     <div class="card bg-base-200">
       <div class="card-body p-4 gap-2">
         <div class="flex items-center gap-2 flex-wrap">
-          <h3 class="text-base font-semibold flex-1 min-w-0 truncate">📖 {displayTitle || $t('common.untitled')}</h3>
+          <h3 class="text-base font-semibold flex-1 min-w-0 truncate">{displayTitle || $t('common.untitled')}</h3>
           {#if inOutlinePhase}
             <button class="btn btn-success btn-xs" on:click={confirmOutline} disabled={$taskRunning || chapters.length === 0}>{$t('outline.btn.confirm')}</button>
           {/if}
-          <button class="btn btn-secondary btn-xs" on:click={reviewStory} disabled={$taskRunning || !hasAccepted}>{$t('outline.dynamic.review')}</button>
+          <button class="btn btn-outline btn-xs" on:click={reviewStory} disabled={$taskRunning || !hasAccepted}>{$t('outline.dynamic.review')}</button>
           <button class="btn btn-outline btn-xs" on:click={() => showRevise = !showRevise} disabled={$taskRunning}>{$t('outline.btn.revise')}</button>
           {#if !hasAccepted}
             <button class="btn btn-error btn-outline btn-xs" on:click={deleteOutline} disabled={$taskRunning}>{$t('outline.btn.deleteOutline')}</button>
@@ -411,7 +411,7 @@
           <div class="bg-base-300 rounded-lg p-3 space-y-2">
             <textarea class="textarea textarea-sm w-full h-20 text-sm" bind:value={reviseFeedback} placeholder={$t('outline.revise.placeholder')} disabled={$taskRunning}></textarea>
             <div class="flex justify-between items-center">
-              <span class="text-xs text-base-content/40">{$t('outline.revise.hint')}</span>
+              <span class="text-xs text-base-content/65">{$t('outline.revise.hint')}</span>
               <div class="flex gap-2">
                 <button class="btn btn-ghost btn-xs" on:click={() => { showRevise = false; reviseFeedback = ''; }}>{$t('common.cancel')}</button>
                 <button class="btn btn-primary btn-xs" on:click={reviseOutline} disabled={$taskRunning || !reviseFeedback.trim()}>{$t('outline.revise.submit')}</button>
@@ -426,7 +426,7 @@
 
         {#if p.core_prompt}
           <div>
-            <span class="text-xs text-base-content/50">{$t('outline.corePrompt')}</span>
+            <span class="text-xs text-base-content/65">{$t('outline.corePrompt')}</span>
             <div class="bg-base-300 rounded p-2 text-sm mt-0.5 max-h-24 overflow-y-auto">{p.core_prompt}</div>
           </div>
         {/if}
@@ -438,8 +438,8 @@
     <div class="card bg-base-200">
       <div class="card-body p-4 gap-2">
         <div class="flex items-center justify-between">
-          <h4 class="text-sm font-semibold text-base-content/60">{$t('outline.chapterList')} <span class="font-normal text-base-content/35">{$t('outline.chapterList.summary', { total: projectChapterCount, suffix: pendingCount ? $t('outline.chapterList.pendingSuffix', { n: pendingCount }) : '' })}</span></h4>
-          <span class="text-xs text-base-content/35">{$t('outline.chapterList.editHint')}</span>
+          <h4 class="text-sm font-semibold text-base-content/60">{$t('outline.chapterList')} <span class="font-normal text-base-content/65">{$t('outline.chapterList.summary', { total: projectChapterCount, suffix: pendingCount ? $t('outline.chapterList.pendingSuffix', { n: pendingCount }) : '' })}</span></h4>
+          <span class="text-xs text-base-content/65">{$t('outline.chapterList.editHint')}</span>
         </div>
         <div class="space-y-1.5">
           {#each groups as group (group.id)}
@@ -454,14 +454,14 @@
             {#if editingNum === ch.num}
               <div data-outline-chapter={ch.num} class="bg-base-300 rounded-lg p-3 space-y-2 ring-1 ring-primary/50">
                 <div class="flex items-center gap-2">
-                  <span class="text-sm font-bold text-base-content/50 shrink-0">{$t('outline.chapter.chapterLabel', { num: ch.num })}</span>
+                  <span class="text-sm font-bold text-base-content/65 shrink-0">{$t('outline.chapter.chapterLabel', { num: ch.num })}</span>
                   <input type="text" class="input input-sm flex-1" bind:value={editTitle} placeholder={$t('outline.chapter.titlePlaceholder')} disabled={$taskRunning} />
                 </div>
                 <textarea class="textarea textarea-sm w-full h-24 text-sm" bind:value={editOutline} placeholder={$t('outline.chapter.outlinePlaceholder')} disabled={$taskRunning}></textarea>
                 <div>
-                  <label for="chapter-cast" class="text-xs text-base-content/50 mb-1 block">{$t('outline.chapter.castLabel')}</label>
+                  <label for="chapter-cast" class="text-xs text-base-content/65 mb-1 block">{$t('outline.chapter.castLabel')}</label>
                   <textarea id="chapter-cast" class="textarea textarea-sm w-full h-16 text-sm font-mono" bind:value={editCharactersText} placeholder={$t('outline.chapter.castPlaceholder')} disabled={$taskRunning}></textarea>
-                  <p class="text-xs text-base-content/35 mt-0.5">{$t('outline.chapter.castHint')}</p>
+                  <p class="text-xs text-base-content/65 mt-0.5">{$t('outline.chapter.castHint')}</p>
                 </div>
                 <div class="flex justify-end gap-2">
                   <button class="btn btn-ghost btn-xs" on:click={cancelEdit}>{$t('common.cancel')}</button>
@@ -477,7 +477,7 @@
                 on:click={() => isOutlineEditable(ch.status) && !$taskRunning && startEdit(ch)}
               >
                 <div class="flex items-center gap-2">
-                  <span class="text-sm font-bold text-base-content/40 w-12 shrink-0">{ch.num}</span>
+                  <span class="text-sm font-bold text-base-content/65 w-12 shrink-0">{ch.num}</span>
                   <span class="text-sm font-medium flex-1 min-w-0 truncate">{ch.title}</span>
                   <span class="badge badge-xs {statusMeta[ch.status]?.cls || 'badge-ghost'}">{statusMeta[ch.status]?.label || ch.status}</span>
                   {#if isOutlineEditable(ch.status)}
@@ -493,7 +493,7 @@
                     {/each}
                   </div>
                 {/if}
-                <p class="text-xs text-base-content/50 mt-1 ml-14 line-clamp-2">{ch.outline}</p>
+                <p class="text-xs text-base-content/65 mt-1 ml-14 line-clamp-2">{ch.outline}</p>
               </div>
             {/if}
           {/each}
@@ -503,7 +503,7 @@
 
         {#if $streamingChapterIdx >= 0 && $streamingContent}
           <div class="bg-base-300 rounded p-3 mt-1 text-sm max-h-48 overflow-y-auto chapter-content">
-            <div class="text-xs text-base-content/40 mb-1 flex items-center gap-1">
+            <div class="text-xs text-base-content/65 mb-1 flex items-center gap-1">
               <span class="loading loading-dots loading-xs"></span> {$t('outline.streamHint')}
             </div>
             {$streamingContent}

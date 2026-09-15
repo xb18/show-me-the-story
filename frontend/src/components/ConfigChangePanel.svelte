@@ -85,11 +85,11 @@
                 <span class="badge badge-xs badge-ghost">{sourceLabel(c.source)}</span>
               </div>
               {#if c.reason}
-                <p class="text-xs text-base-content/50">{c.reason}</p>
+                <p class="text-xs text-base-content/65">{c.reason}</p>
               {/if}
               <div class="text-xs text-base-content/60">
-                <div><span class="text-base-content/40">{$t('configChange.current')}:</span> {c.current || $t('configChange.empty')}</div>
-                <div class="mt-0.5"><span class="text-base-content/40">{$t('configChange.proposed')}:</span> {c.proposed}</div>
+                <div><span class="text-base-content/65">{$t('configChange.current')}:</span> {c.current || $t('configChange.empty')}</div>
+                <div class="mt-0.5"><span class="text-base-content/65">{$t('configChange.proposed')}:</span> {c.proposed}</div>
               </div>
             </div>
           </label>

@@ -72,13 +72,13 @@
   $: orgs = ($settings?.organizations || []);
   $: rels = ($settings?.relations || []);
 
-  const entityIcons = { character: '👤', organization: '🏛️', worldview: '🌍' };
+  const entityIcons = { character: '', organization: '', worldview: '' };
 
   // 关系双方可选实体（角色 / 组织 / 世界观条目）
   $: entityOptions = [
-    ...chars.map(c => ({ key: 'character:' + c.id, label: '👤 ' + c.name })),
-    ...orgs.map(o => ({ key: 'organization:' + o.id, label: '🏛️ ' + o.name })),
-    ...allWvs.map(w => ({ key: 'worldview:' + w.id, label: '🌍 ' + w.name })),
+    ...chars.map(c => ({ key: 'character:' + c.id, label: '' + c.name })),
+    ...orgs.map(o => ({ key: 'organization:' + o.id, label: '' + o.name })),
+    ...allWvs.map(w => ({ key: 'worldview:' + w.id, label: '' + w.name })),
   ];
 
   $: nameById = (() => {
@@ -454,7 +454,7 @@
         <h3 class="card-title text-base">{$t('config.api.title')}</h3>
         <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
           <div class="col-span-2">
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.api.baseUrl')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.api.baseUrl')}</span>
             <input type="text" class="input input-sm w-full" bind:value={localApiCfg.base_url} placeholder="https://api.openai.com/v1" disabled={$taskRunning || testingApi} />
             <label class="label cursor-pointer justify-start gap-2 py-1 px-0 min-h-0">
               <input type="checkbox" class="toggle toggle-xs" bind:checked={localApiCfg.url_strict} disabled={$taskRunning || testingApi} />
@@ -462,34 +462,34 @@
             </label>
             <p class="text-xs text-base-content/45 mb-1">{$t('config.api.urlStrictHint')}</p>
             {#if resolvedChatURL}
-              <p class="text-xs text-base-content/50 break-all">
+              <p class="text-xs text-base-content/65 break-all">
                 {$t('config.api.resolvedUrl')}: <code class="font-mono text-primary/80">{resolvedChatURL}</code>
               </p>
             {/if}
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.api.model')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.api.model')}</span>
             <input type="text" class="input input-sm w-full" bind:value={localApiCfg.model} placeholder="gpt-4" disabled={$taskRunning || testingApi} />
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.api.timeout')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.api.timeout')}</span>
             <input type="number" class="input input-sm w-full" bind:value={localApiCfg.http_timeout_seconds} disabled={$taskRunning || testingApi} />
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.api.maxTokens')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.api.maxTokens')}</span>
             <input type="number" class="input input-sm w-full" bind:value={localApiCfg.max_tokens} placeholder="{$t('config.api.maxTokens.placeholder')}" disabled={$taskRunning || testingApi} title={$t('config.api.maxTokens.tooltip')} />
           </div>
           <div class="col-span-2">
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.api.key')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.api.key')}</span>
             <input type="password" class="input input-sm w-full" bind:value={localApiCfg.api_key} placeholder="sk-..." disabled={$taskRunning || testingApi} />
           </div>
         </div>
         {#if $apiTestResult}
           <div class="text-xs rounded-md border px-2.5 py-1.5 {$apiTestResult.ok ? 'border-success/40 bg-success/10 text-success' : 'border-error/40 bg-error/10 text-error'}">
             {#if $apiTestResult.ok}
-              ✓ {$t('config.api.testResultOk', { model: $apiTestResult.model })}
+              {$t('config.api.testResultOk', { model: $apiTestResult.model })}
             {:else}
-              ✕ {$t('config.api.testResultFail', { error: $apiTestResult.error })}
+              {$t('config.api.testResultFail', { error: $apiTestResult.error })}
             {/if}
           </div>
         {/if}
@@ -516,15 +516,15 @@
         {/if}
         <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.story.type')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.story.type')}</span>
             <input type="text" class="input input-sm w-full" bind:value={localStoryCfg.type} placeholder={$t('config.story.type.placeholder')} disabled={$taskRunning} />
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.story.titleField')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.story.titleField')}</span>
             <input type="text" class="input input-sm w-full" bind:value={localStoryCfg.title} placeholder={$t('config.story.title.placeholder')} disabled={$taskRunning} />
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.story.targetWords')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.story.targetWords')}</span>
             <input type="number" class="input input-sm w-full" bind:value={localStoryCfg.target_words_per_chapter} disabled={$taskRunning} />
           </div>
         </div>
@@ -540,11 +540,11 @@
     <div class="card-body p-4 gap-2">
       <h3 class="card-title text-base">{$t('config.style.title')}</h3>
       <div>
-        <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.style.label')}</span>
+        <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.style.label')}</span>
         <textarea class="textarea w-full h-28 text-base" bind:value={localStoryCfg.writing_style} placeholder={$t('config.style.placeholder')} disabled={$taskRunning}></textarea>
       </div>
       <div>
-        <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.pov.label')}</span>
+        <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.pov.label')}</span>
         <textarea class="textarea w-full h-20 text-base" bind:value={localStoryCfg.writing_pov} placeholder={$t('config.pov.placeholder')} disabled={$taskRunning}></textarea>
       </div>
       <div class="flex justify-end">
@@ -559,20 +559,20 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div class="flex justify-between items-center cursor-pointer select-none" on:click={() => charCollapse = !charCollapse}>
-        <h3 class="card-title text-base">{$t('config.char.title')} <span class="text-xs font-normal text-base-content/40">({chars.length})</span></h3>
-        <svg class="w-4 h-4 text-base-content/40 transition-transform" class:rotate-180={charCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        <h3 class="card-title text-base">{$t('config.char.title')} <span class="text-xs font-normal text-base-content/65">({chars.length})</span></h3>
+        <svg class="w-4 h-4 text-base-content/65 transition-transform" class:rotate-180={charCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
       </div>
       {#if !charCollapse}
         <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
           {#if chars.length === 0}
-            <p class="text-xs text-base-content/40 col-span-full py-2">{$t('config.char.empty')}</p>
+            <p class="text-xs text-base-content/65 col-span-full py-2">{$t('config.char.empty')}</p>
           {:else}
             {#each chars as c}
               <div class="flex items-start gap-2.5 bg-base-300 rounded-lg p-2.5 group">
                 <div class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold shrink-0">{stripNameMarks(c.name)[0]}</div>
                 <div class="flex-1 min-w-0">
                   <div class="text-sm font-medium truncate">{stripNameMarks(c.name)}</div>
-                  <div class="text-xs text-base-content/40 line-clamp-1">{c.personality || c.background || c.age || ''}</div>
+                  <div class="text-xs text-base-content/65 line-clamp-1">{c.personality || c.background || c.age || ''}</div>
                 </div>
                 <div class="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                   <button class="btn btn-outline btn-xs px-1" on:click={() => openCharForm(c)} disabled={$taskRunning}>{$t('common.edit')}</button>
@@ -587,37 +587,37 @@
           <div class="bg-base-300 rounded-lg p-3 space-y-2 mt-1">
             <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.name')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.name')}</span>
                 <input type="text" class="input input-sm w-full" bind:value={charName} disabled={$taskRunning} />
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.age')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.age')}</span>
                 <input type="text" class="input input-sm w-full" bind:value={charAge} disabled={$taskRunning} />
               </div>
             </div>
             <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.appearance')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.appearance')}</span>
                 <textarea class="textarea textarea-sm w-full h-14 text-sm" bind:value={charAppearance} disabled={$taskRunning}></textarea>
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.personality')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.personality')}</span>
                 <textarea class="textarea textarea-sm w-full h-14 text-sm" bind:value={charPersonality} disabled={$taskRunning}></textarea>
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.background')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.background')}</span>
                 <textarea class="textarea textarea-sm w-full h-14 text-sm" bind:value={charBackground} disabled={$taskRunning}></textarea>
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.motivation')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.motivation')}</span>
                 <textarea class="textarea textarea-sm w-full h-14 text-sm" bind:value={charMotivation} disabled={$taskRunning}></textarea>
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.abilities')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.abilities')}</span>
                 <textarea class="textarea textarea-sm w-full h-14 text-sm" bind:value={charAbilities} disabled={$taskRunning}></textarea>
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.char.notes')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.char.notes')}</span>
                 <textarea class="textarea textarea-sm w-full h-14 text-sm" bind:value={charNotes} disabled={$taskRunning}></textarea>
               </div>
             </div>
@@ -644,8 +644,8 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div class="flex justify-between items-center cursor-pointer select-none" on:click={() => wvCollapse = !wvCollapse}>
-        <h3 class="card-title text-base">{$t('config.wv.title')} <span class="text-xs font-normal text-base-content/40">({filteredWvs.length})</span></h3>
-        <svg class="w-4 h-4 text-base-content/40 transition-transform" class:rotate-180={wvCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        <h3 class="card-title text-base">{$t('config.wv.title')} <span class="text-xs font-normal text-base-content/65">({filteredWvs.length})</span></h3>
+        <svg class="w-4 h-4 text-base-content/65 transition-transform" class:rotate-180={wvCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
       </div>
       {#if !wvCollapse}
         <div class="tabs tabs-box tabs-xs bg-base-300 w-fit">
@@ -658,14 +658,14 @@
 
         <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
           {#if filteredWvs.length === 0}
-            <p class="text-xs text-base-content/40 col-span-full py-2">{$t('config.wv.empty')}</p>
+            <p class="text-xs text-base-content/65 col-span-full py-2">{$t('config.wv.empty')}</p>
           {:else}
             {#each filteredWvs as w}
               <div class="flex items-start gap-2.5 bg-base-300 rounded-lg p-2.5 group">
                 <div class="w-8 h-8 rounded-lg bg-accent/20 text-accent flex items-center justify-center text-xs font-bold shrink-0">{w.name[0]}</div>
                 <div class="flex-1 min-w-0">
                   <div class="text-sm font-medium truncate">{w.name} <span class="text-xs font-normal text-base-content/30">[{catLabels[w.category] || w.category}]</span></div>
-                  <div class="text-xs text-base-content/40 line-clamp-1">{w.description}</div>
+                  <div class="text-xs text-base-content/65 line-clamp-1">{w.description}</div>
                 </div>
                 <div class="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                   <button class="btn btn-outline btn-xs px-1" on:click={() => openWvForm(w)} disabled={$taskRunning}>{$t('common.edit')}</button>
@@ -680,11 +680,11 @@
           <div class="bg-base-300 rounded-lg p-3 space-y-2 mt-1">
             <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.wv.name')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.wv.name')}</span>
                 <input type="text" class="input input-sm w-full" bind:value={wvName} disabled={$taskRunning} />
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.wv.category')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.wv.category')}</span>
                 <select class="select select-sm w-full" bind:value={wvCategory} disabled={$taskRunning}>
                   <option value="geography">{$t('config.wv.cat.geography')}</option>
                   <option value="faction">{$t('config.wv.cat.faction')}</option>
@@ -696,11 +696,11 @@
               </div>
             </div>
             <div>
-              <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.wv.description')}</span>
+              <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.wv.description')}</span>
               <textarea class="textarea textarea-sm w-full h-16 text-sm" bind:value={wvDescription} disabled={$taskRunning}></textarea>
             </div>
             <div>
-              <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.wv.tags')}</span>
+              <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.wv.tags')}</span>
               <input type="text" class="input input-sm w-full" bind:value={wvTags} placeholder={$t('config.wv.tags.placeholder')} disabled={$taskRunning} />
             </div>
             <div class="flex gap-1.5">
@@ -726,22 +726,22 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div class="flex justify-between items-center cursor-pointer select-none" on:click={() => orgCollapse = !orgCollapse}>
-        <h3 class="card-title text-base">{$t('config.org.title')} <span class="text-xs font-normal text-base-content/40">({orgs.length})</span></h3>
-        <svg class="w-4 h-4 text-base-content/40 transition-transform" class:rotate-180={orgCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        <h3 class="card-title text-base">{$t('config.org.title')} <span class="text-xs font-normal text-base-content/65">({orgs.length})</span></h3>
+        <svg class="w-4 h-4 text-base-content/65 transition-transform" class:rotate-180={orgCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
       </div>
       {#if !orgCollapse}
         <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
           {#if orgs.length === 0}
-            <p class="text-xs text-base-content/40 col-span-full py-2">{$t('config.org.empty')}</p>
+            <p class="text-xs text-base-content/65 col-span-full py-2">{$t('config.org.empty')}</p>
           {:else}
             {#each orgs as o}
               <div class="flex items-start gap-2.5 bg-base-300 rounded-lg p-2.5 group">
                 <div class="w-8 h-8 rounded-lg bg-warning/20 text-warning flex items-center justify-center text-xs font-bold shrink-0">{o.name[0]}</div>
                 <div class="flex-1 min-w-0">
                   <div class="text-sm font-medium truncate">{o.name} {#if o.type}<span class="text-xs font-normal text-base-content/30">[{o.type}]</span>{/if}</div>
-                  <div class="text-xs text-base-content/40 line-clamp-1">{o.description || ''}</div>
+                  <div class="text-xs text-base-content/65 line-clamp-1">{o.description || ''}</div>
                   {#if (o.members || []).length > 0}
-                    <div class="text-xs text-base-content/35 line-clamp-1 mt-0.5">{$t('config.org.membersList', { names: (o.members || []).map(id => nameById[id] || id).join(', ') })}</div>
+                    <div class="text-xs text-base-content/65 line-clamp-1 mt-0.5">{$t('config.org.membersList', { names: (o.members || []).map(id => nameById[id] || id).join(', ') })}</div>
                   {/if}
                 </div>
                 <div class="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
@@ -757,21 +757,21 @@
           <div class="bg-base-300 rounded-lg p-3 space-y-2 mt-1">
             <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.org.name')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.org.name')}</span>
                 <input type="text" class="input input-sm w-full" bind:value={orgName} disabled={$taskRunning} />
               </div>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.org.type')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.org.type')}</span>
                 <input type="text" class="input input-sm w-full" bind:value={orgType} placeholder={$t('config.org.type.placeholder')} disabled={$taskRunning} />
               </div>
             </div>
             <div>
-              <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.org.description')}</span>
+              <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.org.description')}</span>
               <textarea class="textarea textarea-sm w-full h-16 text-sm" bind:value={orgDescription} disabled={$taskRunning}></textarea>
             </div>
             {#if chars.length > 0}
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.org.members')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.org.members')}</span>
                 <div class="flex flex-wrap gap-x-3 gap-y-1">
                   {#each chars as c}
                     <label class="flex items-center gap-1 cursor-pointer text-sm">
@@ -802,21 +802,23 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div class="flex justify-between items-center cursor-pointer select-none" on:click={() => relCollapse = !relCollapse}>
-        <h3 class="card-title text-base">{$t('config.rel.title')} <span class="text-xs font-normal text-base-content/40">({rels.length})</span></h3>
-        <svg class="w-4 h-4 text-base-content/40 transition-transform" class:rotate-180={relCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        <h3 class="card-title text-base">{$t('config.rel.title')} <span class="text-xs font-normal text-base-content/65">({rels.length})</span></h3>
+        <svg class="w-4 h-4 text-base-content/65 transition-transform" class:rotate-180={relCollapse} viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
       </div>
       {#if !relCollapse}
         <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-2">
           {#if rels.length === 0}
-            <p class="text-xs text-base-content/40 col-span-full py-2">{$t('config.rel.empty')}</p>
+            <p class="text-xs text-base-content/65 col-span-full py-2">{$t('config.rel.empty')}</p>
           {:else}
             {#each rels as r}
               <div class="flex items-center gap-2 bg-base-300 rounded-lg p-2.5 group">
-                <div class="flex-1 min-w-0 text-sm flex items-center gap-1.5 flex-wrap">
-                  <span class="font-medium">{entityIcons[r.source_type] || ''} {nameById[r.source_id] || r.source_id}</span>
-                  <span class="badge badge-xs badge-secondary">{r.label}</span>
-                  <span class="text-base-content/40">→</span>
-                  <span class="font-medium">{entityIcons[r.target_type] || ''} {nameById[r.target_id] || r.target_id}</span>
+                <div class="flex-1 min-w-0 text-sm">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="font-medium">{entityIcons[r.source_type] || ''} {nameById[r.source_id] || r.source_id}</span>
+                    <span class="text-base-content/65">→</span>
+                    <span class="font-medium">{entityIcons[r.target_type] || ''} {nameById[r.target_id] || r.target_id}</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-secondary break-words">{r.label}</p>
                 </div>
                 <div class="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                   <button class="btn btn-outline btn-xs px-1" on:click={() => openRelForm(r)} disabled={$taskRunning}>{$t('common.edit')}</button>
@@ -831,7 +833,7 @@
           <div class="bg-base-300 rounded-lg p-3 space-y-2 mt-1">
             <div class="grid grid-cols-[1fr_auto_1fr] gap-2 items-end">
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.rel.source')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.rel.source')}</span>
                 <select class="select select-sm w-full" bind:value={relSource} disabled={$taskRunning}>
                   <option value="" disabled>{$t('config.rel.entityHint')}</option>
                   {#each entityOptions as opt}
@@ -839,9 +841,9 @@
                   {/each}
                 </select>
               </div>
-              <span class="text-base-content/40 pb-1.5">→</span>
+              <span class="text-base-content/65 pb-1.5">→</span>
               <div>
-                <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.rel.target')}</span>
+                <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.rel.target')}</span>
                 <select class="select select-sm w-full" bind:value={relTarget} disabled={$taskRunning}>
                   <option value="" disabled>{$t('config.rel.entityHint')}</option>
                   {#each entityOptions as opt}
@@ -851,7 +853,7 @@
               </div>
             </div>
             <div>
-              <span class="text-xs text-base-content/50 mb-0.5 block">{$t('config.rel.label')}</span>
+              <span class="text-xs text-base-content/65 mb-0.5 block">{$t('config.rel.label')}</span>
               <input type="text" class="input input-sm w-full" bind:value={relLabel} placeholder={$t('config.rel.label.placeholder')} disabled={$taskRunning} />
             </div>
             <div class="flex gap-1.5">
@@ -864,7 +866,7 @@
         <div class="flex gap-1.5">
           <button class="btn btn-primary btn-xs" on:click={requestNewRel} disabled={$taskRunning || entityOptions.length < 2}>{$t('config.rel.create')}</button>
           {#if entityOptions.length < 2}
-            <span class="text-xs text-base-content/35 self-center">{$t('config.rel.needTwo')}</span>
+            <span class="text-xs text-base-content/65 self-center">{$t('config.rel.needTwo')}</span>
           {/if}
         </div>
       {/if}

@@ -24,6 +24,10 @@
   let restoring = false;
   let restoreTimer;
   let destroyed = false;
+  let navigationOpen = false;
+  let assistantOpen = false;
+  let navigationButton;
+  let assistantButton;
 
   $: if ($taskRunning && !$currentProject) restoreCurrentProject();
 
@@ -126,12 +130,51 @@
   function toggleLocale() {
     setLocale($uiLocale === 'en' ? 'zh' : 'en');
   }
+
+  function openNavigation() {
+    navigationOpen = true;
+    requestAnimationFrame(() => document.querySelector('#workspace-navigation button')?.focus());
+  }
+  function openAssistant() {
+    assistantOpen = true;
+    requestAnimationFrame(() => document.querySelector('#writing-assistant button')?.focus());
+  }
+  function closeNavigation() {
+    if (!navigationOpen) return;
+    navigationOpen = false;
+    requestAnimationFrame(() => navigationButton?.focus());
+  }
+  function closeAssistant() {
+    if (!assistantOpen) return;
+    assistantOpen = false;
+    requestAnimationFrame(() => assistantButton?.focus());
+  }
+  function goTo(page) {
+    window.location.hash = '#' + page;
+    closeNavigation();
+  }
+  function handleShellKeydown(event) {
+    if (event.key === 'Escape') { closeNavigation(); closeAssistant(); return; }
+    if (event.key !== 'Tab') return;
+    const panel = document.getElementById(navigationOpen ? 'workspace-navigation' : assistantOpen ? 'writing-assistant' : '');
+    if (!panel) return;
+    const controls = [...panel.querySelectorAll('button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')];
+    if (!controls.length) return;
+    const first = controls[0], last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  }
 </script>
 
-<div class="flex flex-col h-screen bg-base-300 text-base-content overflow-hidden">
+<svelte:window on:keydown={handleShellKeydown} />
+
+<div class="app-shell flex flex-col bg-base-300 text-base-content overflow-hidden">
   <!-- Header -->
-  <header class="navbar bg-base-200 border-b border-base-content/10 px-4 min-h-[46px] shrink-0 gap-2 flex-wrap">
-    <span class="text-lg font-semibold">{$t('app.title')}</span>
+  <header class="app-header navbar bg-base-200 border-b border-base-content/10 px-3 min-h-14 shrink-0 gap-2">
+    {#if $currentProject}
+      <button bind:this={navigationButton} class="btn btn-ghost btn-sm lg:hidden" on:click={openNavigation} aria-expanded={navigationOpen} aria-controls="workspace-navigation" aria-label={$t('app.navigation.open')}>{$t('app.navigation')}</button>
+    {/if}
+    <span class="app-brand text-base font-semibold whitespace-nowrap">{$t('app.title')}</span>
     {#if appVersion}
       <span class="badge badge-xs badge-ghost font-mono">{appVersion}</span>
     {/if}
@@ -141,8 +184,8 @@
       </a>
     {/if}
     {#if $currentProject}
-      <span class="badge badge-sm badge-outline">{$config?.story?.title?.trim() || $t('app.untitled')}</span>
-      <span class="badge badge-sm badge-accent uppercase" title={$projectLanguage === 'en' ? 'English' : '中文'}>
+      <span class="app-project-title min-w-0 text-sm font-medium leading-snug">{$config?.story?.title?.trim() || $t('app.untitled')}</span>
+      <span class="badge badge-sm badge-outline uppercase max-sm:hidden" title={$projectLanguage === 'en' ? 'English' : '中文'}>
         {$projectLanguage === 'en' ? 'EN' : 'ZH'}
       </span>
       <button
@@ -155,7 +198,7 @@
       </button>
       <span class="badge badge-sm" class:badge-primary={$progress}>{phase}</span>
       {#if chapterStats}
-        <span class="badge badge-sm badge-ghost">{chapterStats}</span>
+        <span class="badge badge-sm badge-ghost max-md:hidden">{chapterStats}</span>
       {/if}
       {#if $taskRunning}
         <span class="badge badge-sm badge-warning gap-1">
@@ -173,6 +216,9 @@
     >
       {$uiLocale === 'en' ? $t('app.uiLang.en') : $t('app.uiLang.zh')}
     </button>
+    {#if $currentProject}
+      <button bind:this={assistantButton} class="btn btn-outline btn-sm xl:hidden" on:click={openAssistant} aria-expanded={assistantOpen} aria-controls="writing-assistant">{$t('app.assistant')}</button>
+    {/if}
   </header>
 
   {#if initializing || ($taskRunning && !$currentProject)}
@@ -181,34 +227,40 @@
     </main>
   {:else if !$currentProject}
     <!-- Project selection -->
-    <main class="flex-1 overflow-y-auto p-6">
+    <main class="project-picker flex-1 overflow-y-auto p-4 sm:p-8">
       <Projects />
     </main>
   {:else}
-    <div class="flex flex-1 overflow-hidden">
+    <div class="workspace flex flex-1 overflow-hidden">
+      {#if navigationOpen || assistantOpen}
+        <button class="workspace-scrim" aria-label={$t('common.close')} on:click={() => { if (navigationOpen) closeNavigation(); if (assistantOpen) closeAssistant(); }}></button>
+      {/if}
       <!-- Left: vertical nav -->
-      <nav class="flex flex-col w-44 shrink-0 bg-base-200 border-r border-base-content/10 py-3 px-2 gap-0.5">
+      <nav id="workspace-navigation" class:drawer-open={navigationOpen} class="app-navigation flex flex-col w-48 shrink-0 bg-base-200 border-r border-base-content/10 py-4 px-3 gap-1" aria-label={$t('app.navigation')}>
+        <button class="btn btn-ghost btn-sm mb-2 lg:hidden" on:click={closeNavigation}>{$t('common.close')}</button>
         {#each [
-          ['config', '⚙️', 'nav.config'],
-          ['outline', '📝', 'nav.outline'],
-          ['writing', '✍️', 'nav.writing'],
-          ['proofread', '✅', 'nav.proofread'],
-          ['foreshadows', '🔗', 'nav.foreshadows'],
-          ['memory', '🧠', 'nav.memory'],
-          ['relations', '🕸️', 'nav.relations'],
-          ['skills', '🧩', 'nav.skills']
-        ] as [page, icon, labelKey]}
+          ['config', 'nav.config'],
+          ['outline', 'nav.outline'],
+          ['writing', 'nav.writing'],
+          ['proofread', 'nav.proofread'],
+          ['foreshadows', 'nav.foreshadows'],
+          ['memory', 'nav.memory'],
+          ['relations', 'nav.relations'],
+          ['skills', 'nav.skills']
+        ] as [page, labelKey], i}
+          {#if i === 1 || i === 3 || i === 4 || i === 7}<span class="nav-divider" aria-hidden="true"></span>{/if}
           <button
-            class="btn btn-sm justify-start w-full gap-2 px-3 text-sm {$currentPage === page ? 'btn-primary font-medium' : 'btn-ghost'}"
-            on:click={() => window.location.hash = '#' + page}
+            class="nav-item btn btn-sm justify-start w-full px-3 text-sm {$currentPage === page ? 'btn-primary font-medium' : 'btn-ghost'}"
+            aria-current={$currentPage === page ? 'page' : undefined}
+            on:click={() => goTo(page)}
           >
-            <span class="text-xs">{icon}</span>{$t(labelKey)}
+            {$t(labelKey)}
           </button>
         {/each}
       </nav>
 
       <!-- Center: page content -->
-      <main class="@container flex-[2] min-w-0 overflow-y-auto p-4 border-r border-base-content/10">
+      <main class="workspace-main @container flex-[2] min-w-0 overflow-y-auto p-3 sm:p-5 xl:border-r xl:border-base-content/10">
         {#if $currentPage === 'config'}
           <Config {sendToChat} />
         {:else if $currentPage === 'outline'}
@@ -229,9 +281,10 @@
       </main>
 
       <!-- Right: Chat Panel -->
-      <div class="flex-1 min-w-72 max-w-md bg-base-200 overflow-hidden">
+      <aside id="writing-assistant" class:drawer-open={assistantOpen} class="assistant-panel flex-1 min-w-72 max-w-md bg-base-200 overflow-hidden" aria-label={$t('app.assistant')}>
+        <button class="btn btn-ghost btn-sm m-2 mb-0 xl:hidden" on:click={closeAssistant}>{$t('common.close')}</button>
         <ChatPanel bind:this={chatPanel} contextPage={$currentPage} />
-      </div>
+      </aside>
     </div>
   {/if}
 

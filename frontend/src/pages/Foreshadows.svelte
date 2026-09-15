@@ -255,7 +255,7 @@
           <span class="badge badge-error">{$t('fs.stats.overdue', { n: overdueList.length })}</span>
         {/if}
       </div>
-      <p class="text-xs text-base-content/50">
+      <p class="text-xs text-base-content/65">
         {@html $t('fs.hint', { file: '<code class="text-xs">Foreshadows.md</code>' })}
       </p>
     </div>
@@ -279,7 +279,7 @@
             <div class="rounded-lg bg-base-300/50 p-3">
               <div class="font-medium">#{c.foreshadow_id} {c.foreshadow_name}</div>
               <div class="text-base-content/70 mt-1">{c.description}</div>
-              <div class="text-xs text-base-content/50 mt-1">{$t('fs.outlineConflict.suggestedFix')}：{c.suggested_fix}</div>
+              <div class="text-xs text-base-content/65 mt-1">{$t('fs.outlineConflict.suggestedFix')}：{c.suggested_fix}</div>
             </div>
           {/each}
         </div>
@@ -300,7 +300,7 @@
               <div class="min-w-0 flex-1">
                 <div class="font-medium">{s.name}</div>
                 <div class="text-sm text-base-content/70 mt-1">{s.description}</div>
-                <div class="text-xs text-base-content/50 mt-1">
+                <div class="text-xs text-base-content/65 mt-1">
                   {$t('fs.suggestions.line', { plant: s.plant_chapter, target: s.target_chapter })}
                 </div>
               </div>
@@ -338,7 +338,7 @@
 
   {#if foreshadows.length === 0}
     <div class="card bg-base-200">
-      <div class="card-body items-center text-center py-12 text-base-content/50">
+      <div class="card-body items-center text-center py-12 text-base-content/65">
         <p>{$t('fs.empty.title')}</p>
         <p class="text-sm">{$t('fs.empty.hint')}</p>
       </div>
@@ -350,7 +350,7 @@
           <div class="card-body py-4 gap-2">
             <div class="flex flex-wrap items-start justify-between gap-2">
               <div>
-                <span class="text-xs text-base-content/40 mr-2">#{fs.id}</span>
+                <span class="text-xs text-base-content/65 mr-2">#{fs.id}</span>
                 <span class="font-semibold">{fs.name}</span>
                 <span class="badge badge-sm ml-2 {statusMeta[fs.status]?.cls || 'badge-ghost'}">
                   {statusMeta[fs.status]?.label || fs.status}
@@ -363,7 +363,7 @@
               </div>
             </div>
             <p class="text-sm text-base-content/70">{fs.description}</p>
-            <div class="text-xs text-base-content/50 flex flex-wrap gap-x-4 gap-y-1">
+            <div class="text-xs text-base-content/65 flex flex-wrap gap-x-4 gap-y-1">
               <span>{$t('fs.plant', { n: fs.plant_chapter })}</span>
               {#if fs.target_chapter > 0}
                 <span>{$t('fs.target', { n: fs.target_chapter })}</span>
@@ -371,7 +371,7 @@
             </div>
             {#if fs.events?.length}
               <div class="text-xs mt-1">
-                <div class="text-base-content/50 mb-1">{$t('fs.events.title')}</div>
+                <div class="text-base-content/65 mb-1">{$t('fs.events.title')}</div>
                 <ul class="space-y-0.5">
                   {#each fs.events as ev}
                     <li class="text-base-content/70">{$t('fs.events.line', { chapter: ev.chapter, note: ev.note })}</li>
@@ -410,7 +410,7 @@
             {/if}
             {#if row.events.length}
               <div class="text-xs space-y-1">
-                <span class="text-base-content/50">{$t('fs.timeline.events')}</span>
+                <span class="text-base-content/65">{$t('fs.timeline.events')}</span>
                 {#each row.events as item}
                   <div class="pl-2 text-base-content/70">{$t('fs.timeline.eventLine', { id: item.foreshadow.id, name: item.foreshadow.name, note: item.event.note })}</div>
                 {/each}
@@ -450,26 +450,26 @@
       <h3 class="font-bold text-lg">{editing ? $t('fs.form.edit') : $t('fs.form.create')}</h3>
       <div class="flex flex-col gap-3 mt-4">
         <div>
-          <span class="text-xs text-base-content/50 mb-0.5 block">{$t('fs.form.name')}</span>
+          <span class="text-xs text-base-content/65 mb-0.5 block">{$t('fs.form.name')}</span>
           <input class="input input-bordered input-sm w-full" bind:value={form.name} disabled={$taskRunning} />
         </div>
         <div>
-          <span class="text-xs text-base-content/50 mb-0.5 block">{$t('fs.form.description')}</span>
+          <span class="text-xs text-base-content/65 mb-0.5 block">{$t('fs.form.description')}</span>
           <textarea class="textarea textarea-bordered text-sm w-full" rows="3" bind:value={form.description} disabled={$taskRunning}></textarea>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('fs.form.plant')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('fs.form.plant')}</span>
             <input type="number" min="1" class="input input-bordered input-sm w-full" bind:value={form.plant_chapter} disabled={$taskRunning} />
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('fs.form.target')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('fs.form.target')}</span>
             <input type="number" min="0" class="input input-bordered input-sm w-full" bind:value={form.target_chapter} disabled={$taskRunning} />
           </div>
         </div>
         {#if editing}
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('fs.form.status')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('fs.form.status')}</span>
             <select class="select select-bordered select-sm w-full" bind:value={form.status} disabled={$taskRunning}>
               {#each Object.entries(statusMeta) as [val, meta]}
                 <option value={val}>{meta.label}</option>
@@ -477,7 +477,7 @@
             </select>
           </div>
           <div>
-            <span class="text-xs text-base-content/50 mb-0.5 block">{$t('fs.form.resolution')}</span>
+            <span class="text-xs text-base-content/65 mb-0.5 block">{$t('fs.form.resolution')}</span>
             <input class="input input-bordered input-sm w-full" bind:value={form.resolution} disabled={$taskRunning} />
           </div>
         {/if}

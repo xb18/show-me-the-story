@@ -82,8 +82,8 @@
           <span class="badge badge-outline">{$t('memory.stats.chars', { n: contentChars })}</span>
         {/if}
       </div>
-      <p class="text-xs text-base-content/50">{$t('memory.hint')}</p>
-      <p class="text-xs text-base-content/40">{$t('memory.readonly')}</p>
+      <p class="text-xs text-base-content/65">{$t('memory.hint')}</p>
+      <p class="text-xs text-base-content/65">{$t('memory.readonly')}</p>
     </div>
   </div>
 
@@ -91,7 +91,7 @@
     <div class="card bg-base-200">
       <div class="card-body py-10 text-center gap-2">
         <p class="font-medium text-base-content/70">{$t('memory.empty.title')}</p>
-        <p class="text-sm text-base-content/50 max-w-lg mx-auto">{$t('memory.empty.hint')}</p>
+        <p class="text-sm text-base-content/65 max-w-lg mx-auto">{$t('memory.empty.hint')}</p>
       </div>
     </div>
   {:else}
@@ -111,7 +111,7 @@
         </div>
 
         {#if filtered.length === 0}
-          <p class="text-sm text-base-content/50 py-6 text-center">{$t('memory.filter.noMatch')}</p>
+          <p class="text-sm text-base-content/65 py-6 text-center">{$t('memory.filter.noMatch')}</p>
         {:else}
           <div class="overflow-x-auto">
             <table class="table table-sm">

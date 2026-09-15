@@ -251,7 +251,7 @@
       {$t('chat.session.menu')}
       <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform" class:rotate-180={showSessionList} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
     </button>
-    <span class="text-sm text-base-content/50 truncate flex-1">
+    <span class="text-sm text-base-content/65 truncate flex-1">
       {$currentChatSession?.title || $t('chat.session.placeholder')}
     </span>
     {#if $taskRunning}
@@ -272,13 +272,13 @@
         >
           <div class="flex-1 min-w-0">
             <div class="text-sm font-medium truncate">{s.title}</div>
-            <div class="text-xs text-base-content/40">{new Date(s.updated_at).toLocaleString($uiLocale === 'en' ? 'en-US' : 'zh-CN')} · {$t('chat.session.msgs', { n: s.msg_count || 0 })}</div>
+            <div class="text-xs text-base-content/65">{new Date(s.updated_at).toLocaleString($uiLocale === 'en' ? 'en-US' : 'zh-CN')} · {$t('chat.session.msgs', { n: s.msg_count || 0 })}</div>
           </div>
           <button class="btn btn-error btn-outline btn-xs opacity-0 group-hover:opacity-100 transition-opacity" on:click={(e) => deleteSession(s.id, e)}>{$t('common.delete')}</button>
         </div>
       {/each}
       {#if sessions.length === 0}
-        <div class="px-3 py-2 text-sm text-base-content/40">{$t('chat.session.empty')}</div>
+        <div class="px-3 py-2 text-sm text-base-content/65">{$t('chat.session.empty')}</div>
       {/if}
     </div>
   {/if}
@@ -296,7 +296,7 @@
             <span class="text-success text-xs">●</span>
           {/if}
           <span class="text-xs font-semibold text-base-content/70">{$currentTaskName || $t('chat.task.placeholder')}{$taskRunning ? $t('chat.task.running') : $t('chat.task.ended')}</span>
-          <span class="text-xs text-base-content/40 ml-auto">{taskStatusCollapsed ? $t('chat.task.expand') : $t('chat.task.collapse')}</span>
+          <span class="text-xs text-base-content/65 ml-auto">{taskStatusCollapsed ? $t('chat.task.expand') : $t('chat.task.collapse')}</span>
         </div>
         {#if $taskRunning}
           <div class="mt-1 pl-5"><TaskTokenBadge className="badge badge-xs badge-info gap-1 font-mono whitespace-nowrap" /></div>
@@ -318,11 +318,11 @@
   <!-- 消息区 -->
   <div bind:this={messagesContainer} on:scroll={handleScroll} class="flex-1 overflow-y-auto p-3 space-y-2">
     {#if !$currentChatSession}
-      <div class="text-center text-base-content/40 py-8 text-base">{$t('chat.notSelected')}</div>
+      <div class="text-center text-base-content/65 py-8 text-base">{$t('chat.notSelected')}</div>
     {:else}
       {#if msgs.length === 0 && !streamingText}
-        <div class="text-center text-base-content/40 py-10 space-y-3">
-          <div class="text-3xl">💬</div>
+        <div class="text-center text-base-content/65 py-10 space-y-3">
+          <div class="text-3xl"></div>
           <p class="text-sm">{$t('chat.welcome.hint')}</p>
           <div class="flex flex-wrap justify-center gap-1.5 px-4">
             {#each welcomeHints as hint}
@@ -342,9 +342,9 @@
             {#each m.tool_calls as tc}
               <div class="chat chat-start">
                 <div class="chat-bubble text-xs font-mono max-w-[85%] {dangerTools.has(tc.name) ? 'bg-error/15 border border-error/30' : 'bg-base-300'}">
-                  <div class="{dangerTools.has(tc.name) ? 'text-error' : 'text-warning'} font-semibold mb-0.5">🔧 {toolLabel(tc.name)}</div>
+                  <div class="{dangerTools.has(tc.name) ? 'text-error' : 'text-warning'} font-semibold mb-0.5">{toolLabel(tc.name)}</div>
                   {#if fmtArgs(tc.arguments)}
-                    <div class="text-base-content/50 break-all">{fmtArgs(tc.arguments)}</div>
+                    <div class="text-base-content/65 break-all">{fmtArgs(tc.arguments)}</div>
                   {/if}
                 </div>
               </div>
@@ -364,9 +364,9 @@
                   {#if !m.tool_calls?.length}
                     <div class="chat chat-start">
                       <div class="chat-bubble bg-base-300 text-xs font-mono max-w-[85%]">
-                        <div class="text-warning font-semibold mb-0.5">🔧 {toolLabel(seg.name)}</div>
+                        <div class="text-warning font-semibold mb-0.5">{toolLabel(seg.name)}</div>
                         {#if fmtArgs(seg.args)}
-                          <div class="text-base-content/50 break-all">{fmtArgs(seg.args)}</div>
+                          <div class="text-base-content/65 break-all">{fmtArgs(seg.args)}</div>
                         {/if}
                       </div>
                     </div>
@@ -384,7 +384,7 @@
             <div class="chat-bubble bg-base-300/60 text-xs font-mono max-w-[85%]">
               <details>
                 <summary class="text-info font-semibold cursor-pointer select-none">{$t('chat.tool.result')}</summary>
-                <div class="text-base-content/50 break-all mt-1 max-h-32 overflow-y-auto whitespace-pre-wrap">{toolResultText(m.tool_result, m.tool_result_key, m.tool_result_args)}</div>
+                <div class="text-base-content/65 break-all mt-1 max-h-32 overflow-y-auto whitespace-pre-wrap">{toolResultText(m.tool_result, m.tool_result_key, m.tool_result_args)}</div>
               </details>
             </div>
           </div>
@@ -395,12 +395,12 @@
         <div class="chat chat-start">
           <div class="chat-bubble text-xs font-mono max-w-[85%] {dangerTools.has(tc.name) ? 'bg-error/15 border border-error/30' : 'bg-base-300'}">
             {#if tc.status === 'running'}
-              <div class="text-warning font-semibold mb-0.5">🔧 {toolLabel(tc.name)}</div>
+              <div class="text-warning font-semibold mb-0.5">{toolLabel(tc.name)}</div>
               <div class="text-warning animate-pulse">{$t('chat.tool.running')}</div>
             {:else}
-              <div class="text-success font-semibold mb-0.5">✅ {toolLabel(tc.name)}</div>
+              <div class="text-success font-semibold mb-0.5">{toolLabel(tc.name)}</div>
               {#if tc.result}
-                <div class="text-base-content/50 break-all max-h-20 overflow-y-auto">{tc.result ? (tc.result.length > 200 ? tc.result.slice(0, 200) + '...' : tc.result) : ''}</div>
+                <div class="text-base-content/65 break-all max-h-20 overflow-y-auto">{tc.result ? (tc.result.length > 200 ? tc.result.slice(0, 200) + '...' : tc.result) : ''}</div>
               {/if}
             {/if}
           </div>
@@ -412,9 +412,9 @@
           {#if seg.type === 'tool_call'}
             <div class="chat chat-start">
               <div class="chat-bubble bg-base-300 text-xs font-mono max-w-[85%]">
-                <div class="text-warning font-semibold mb-0.5">🔧 {toolLabel(seg.name)}</div>
+                <div class="text-warning font-semibold mb-0.5">{toolLabel(seg.name)}</div>
                 {#if fmtArgs(seg.args)}
-                  <div class="text-base-content/50 break-all">{fmtArgs(seg.args)}</div>
+                  <div class="text-base-content/65 break-all">{fmtArgs(seg.args)}</div>
                 {/if}
               </div>
             </div>
@@ -431,7 +431,7 @@
   <!-- 失败重试 -->
   {#if $lastFailedTask && !$taskRunning}
     <div class="border-t border-error/30 bg-error/10 px-3 py-2 flex items-center gap-2 shrink-0">
-      <span class="text-sm text-error">❌ {$lastFailedTask.taskName}{$t('chat.failed.suffix')}</span>
+      <span class="text-sm text-error">{$lastFailedTask.taskName}{$t('chat.failed.suffix')}</span>
       <div class="flex-1"></div>
       <button class="btn btn-error btn-xs" on:click={retryTask}>{$t('chat.failed.retry')}</button>
       <button class="btn btn-ghost btn-xs" on:click={() => lastFailedTask.set(null)}>{$t('chat.failed.ignore')}</button>

@@ -56,6 +56,17 @@ export function fitTransform(nodes, viewW, viewH, opts = {}) {
   };
 }
 
+/** Cubic ease-out interpolation for camera transitions. */
+export function cameraFrame(from, to, progress) {
+  const p = Math.max(0, Math.min(1, progress));
+  const eased = 1 - (1 - p) ** 3;
+  return {
+    scale: from.scale + (to.scale - from.scale) * eased,
+    panX: from.panX + (to.panX - from.panX) * eased,
+    panY: from.panY + (to.panY - from.panY) * eased,
+  };
+}
+
 /** Sum of squared velocities — used as a settle signal. */
 export function kineticEnergy(nodes) {
   let e = 0;

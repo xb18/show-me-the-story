@@ -14,7 +14,7 @@
   async function showDetail(id){try{detail=await api('GET',`/api/skill-library/${encodeURIComponent(id)}`)}catch(e){addToast(e.message,'error')}}
   function removeSkill(id){confirmModal.set({message:$t('skills.delete.confirm'),onConfirm:async()=>{try{await api('DELETE',`/api/skill-library/${encodeURIComponent(id)}`);addToast($t('skills.delete.done'),'success');detail=null;await load()}catch(e){addToast(e.message,'error')}}})}
   const blocked=s=>['failed','needs_optimization','validating'].includes(s);
-  function statusIcon(s){return s==='passed'?'✓':s==='failed'?'✕':s==='needs_optimization'?'⚠':s==='validating'?'…':'!'}
+  function statusIcon(s){return s==='passed'?'':s==='failed'?'':s==='needs_optimization'?'':s==='validating'?'…':'!'}
   function statusClass(s){return s==='passed'?'badge-success':s==='failed'?'badge-error':s==='needs_optimization'?'badge-warning':s==='validating'?'badge-info':'badge-ghost'}
 </script>
 

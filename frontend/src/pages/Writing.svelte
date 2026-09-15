@@ -489,10 +489,10 @@
 </script>
 
 {#if !inWriting}
-  <div class="text-center py-16 text-base-content/50">
-    <div class="text-5xl mb-4">✍️</div>
+  <div class="text-center py-16 text-base-content/65">
+    <div class="text-5xl mb-4"></div>
     <p class="text-base mb-1">{$t('writing.notReady.title')}</p>
-    <p class="text-sm text-base-content/35 mb-6">{$t('writing.notReady.hint')}</p>
+    <p class="text-sm text-base-content/65 mb-6">{$t('writing.notReady.hint')}</p>
     <button class="btn btn-primary btn-sm" on:click={() => window.location.hash = '#outline'}>{$t('writing.notReady.goto')}</button>
   </div>
 {:else}
@@ -510,7 +510,7 @@
             <input type="checkbox" class="toggle toggle-xs toggle-success" checked={$autoConfirm} on:change={toggleAutoConfirm} />
             <span class="text-xs text-base-content/60">{$t('writing.progress.autoConfirm')}</span>
           </label>
-          <span class="text-xs text-base-content/40">{$t('writing.progress.totalWords', { n: totalWords.toLocaleString() })}</span>
+          <span class="text-xs text-base-content/65">{$t('writing.progress.totalWords', { n: totalWords.toLocaleString() })}</span>
           {#if accepted >= 2}
             <button class="btn btn-outline btn-xs" on:click={smoothTransitions} disabled={$taskRunning} title={$t('writing.btn.smoothTransitions.tip')}>{$t('writing.btn.smoothTransitions')}</button>
           {/if}
@@ -522,7 +522,7 @@
 			{/if}
         </div>
         <progress class="progress progress-primary w-full" value={pct} max="100"></progress>
-        <div class="text-sm text-base-content/50">{$t('writing.progress.acceptedSummary', { pct, accepted, total })}</div>
+        <div class="text-sm text-base-content/65">{$t('writing.progress.acceptedSummary', { pct, accepted, total })}</div>
       </div>
     </div>
 
@@ -592,21 +592,21 @@
           {#if fsOverdue.length > 0}
             <p class="text-xs text-warning">{$t('writing.fs.overdueDetail', { names: fsOverdue.map(f => `#${f.id} ${f.name}`).join(', ') })}</p>
           {:else if fsNearTarget.length > 0}
-            <p class="text-xs text-base-content/50">{$t('writing.fs.nearDetail', { names: fsNearTarget.map(f => f.name).join(', ') })}</p>
+            <p class="text-xs text-base-content/65">{$t('writing.fs.nearDetail', { names: fsNearTarget.map(f => f.name).join(', ') })}</p>
           {/if}
         </div>
       </div>
     {:else}
       <div class="card bg-base-200">
         <div class="card-body p-4 flex items-center justify-between gap-2">
-          <p class="text-sm text-base-content/50">{$t('writing.fs.none')}</p>
+          <p class="text-sm text-base-content/65">{$t('writing.fs.none')}</p>
           <button class="btn btn-outline btn-xs" on:click={() => window.location.hash = '#foreshadows'}>{$t('writing.fs.setup')}</button>
         </div>
       </div>
     {/if}
 
     <!-- 章节区 -->
-    <div class="grid grid-cols-[345px_minmax(0,1fr)] gap-3" style="min-height:400px">
+    <div class="writing-grid grid grid-cols-[345px_minmax(0,1fr)] gap-3" style="min-height:400px">
       <!-- 章节列表 -->
       <div class="card bg-base-200  overflow-y-auto max-h-[calc(100vh-280px)]">
         <ul class="menu menu-sm p-0 w-full">
@@ -614,7 +614,7 @@
             <li>
               <button class="flex gap-2 items-center {$selectedChapter === i ? 'active' : ''}" on:click={() => selectChapter(i)}>
                 <span class="w-2 h-2 rounded-full shrink-0 {statusMeta[c.status]?.dot || ''}"></span>
-                <span class="text-base-content/50 w-6 shrink-0 text-right">{c.num}</span>
+                <span class="text-base-content/65 w-6 shrink-0 text-right">{c.num}</span>
                 <span class="flex-1 text-left truncate text-sm">{c.title}</span>
                 {#if i === currentIdx && c.status !== 'accepted'}
                   <span class="badge badge-primary badge-xs shrink-0">{$t('writing.tag.current')}</span>
@@ -634,9 +634,9 @@
                 <h2 class="card-title text-base flex-1 min-w-0">{$t('writing.chapter.title', { num: ch.num, title: ch.title })}</h2>
                 <span class="badge badge-sm {statusMeta[ch.status]?.cls || 'badge-ghost'}">{statusMeta[ch.status]?.label || ch.status}</span>
                 {#if showTaskTokens}
-                  <TaskTokenBadge className="text-xs text-base-content/40 font-mono" />
+                  <TaskTokenBadge className="text-xs text-base-content/65 font-mono" />
                 {:else if chapterWordCount > 0}
-                  <span class="text-xs text-base-content/40">{$t('writing.chapter.words', { n: chapterWordCount.toLocaleString() })}</span>
+                  <span class="text-xs text-base-content/65">{$t('writing.chapter.words', { n: chapterWordCount.toLocaleString() })}</span>
                 {/if}
               </div>
 
@@ -645,14 +645,14 @@
 
               {#if ch.outline}
                 <details class="bg-base-300 rounded">
-                  <summary class="p-2 text-xs text-base-content/50 cursor-pointer select-none">{$t('writing.chapter.outline')}</summary>
+                  <summary class="p-2 text-xs text-base-content/65 cursor-pointer select-none">{$t('writing.chapter.outline')}</summary>
                   <div class="px-2 pb-2 text-sm text-base-content/70">{ch.outline}</div>
                 </details>
               {/if}
 
               {#if ch.summary}
                 <details class="bg-base-300 rounded">
-                  <summary class="p-2 text-xs text-base-content/50 cursor-pointer select-none">{$t('writing.chapter.summary')}</summary>
+                  <summary class="p-2 text-xs text-base-content/65 cursor-pointer select-none">{$t('writing.chapter.summary')}</summary>
                   <div class="px-2 pb-2 text-sm text-base-content/70 whitespace-pre-wrap">{ch.summary}</div>
                 </details>
               {/if}
@@ -683,7 +683,7 @@
                               <button class="btn btn-primary btn-xs" on:click={saveBlockEdit} disabled={$taskRunning || !editingText.trim()}>{$t('common.save')}</button>
                             </div>
                           {:else}
-                            <div class="whitespace-pre-wrap {b.type === 'scene_break' ? 'text-center text-base-content/40' : ''}">{b.text}</div>
+                            <div class="whitespace-pre-wrap {b.type === 'scene_break' ? 'text-center text-base-content/65' : ''}">{b.text}</div>
                             {#if selectedBlockId === b.id}<div class="absolute right-1 top-1 flex gap-1 bg-base-200 border border-base-content/20 rounded px-1 py-0.5"><button class="btn btn-outline btn-xs" disabled={$taskRunning} on:click|stopPropagation={() => startBlockEdit(b)}>{$t('writing.block.edit')}</button><button class="btn btn-outline btn-xs" disabled={$taskRunning} on:click|stopPropagation={() => startBlockRevise(b)}>{$t('writing.block.revise')}</button><button class="btn btn-outline btn-xs" disabled={$taskRunning} on:click|stopPropagation={() => startBlockInsert(b.id)}>{$t('writing.block.insertAfter')}</button><button class="btn btn-error btn-outline btn-xs" disabled={$taskRunning} on:click|stopPropagation={() => deleteBlock(b)}>{$t('writing.block.delete')}</button></div>{/if}
                           {/if}
                           {#if revisingBlockId === b.id}
@@ -721,7 +721,7 @@
                   </button>
                 {/if}
               {:else if ch.status === 'pending'}
-                <div class="bg-base-300 rounded-lg p-6 text-center text-sm text-base-content/40">
+                <div class="bg-base-300 rounded-lg p-6 text-center text-sm text-base-content/65">
                   {#if isCurrent}
                     {$t('writing.chapter.pendingCurrent')}
                   {:else}
@@ -783,7 +783,7 @@
                     disabled={$taskRunning}
                   ></textarea>
                   <div class="flex justify-between items-center gap-2 flex-wrap">
-                    <span class="text-xs text-base-content/40">
+                    <span class="text-xs text-base-content/65">
                         {#if selectedSettings.length || !(isCurrent && ch.status === 'review')}
                         {$t('writing.revise.hintTargeted')}
                       {:else}
@@ -801,7 +801,7 @@
             </div>
           </div>
         {:else}
-          <div class="text-center py-16 text-base-content/50 text-base">{$t('writing.emptySelection')}</div>
+          <div class="text-center py-16 text-base-content/65 text-base">{$t('writing.emptySelection')}</div>
         {/if}
       </div>
     </div>

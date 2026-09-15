@@ -4,7 +4,7 @@
 
 ## 项目概览
 
-- 单二进制 Go Web 应用；Go 后端只使用标准库，前端产物与内置 Skill 通过 `embed.FS` 嵌入。
+- 单二进制 Go Web 应用，完整应用体积不到 5 MB；Go 后端只使用标准库，前端产物与内置 Skill 通过 `embed.FS` 嵌入。
 - Go `1.25.1`，模块 `showmethestory`；默认端口 `:48090`，可用 `PORT` 覆盖。
 - 前端：Vite 5、Svelte 4、Tailwind CSS 4、DaisyUI 5、`@xianii/design-system`；Playwright 仅使用系统 Google Chrome 生成 README 截图。
 - 当前项目格式固定为 v4；项目默认保存在程序目录的 `storys/<项目名>/`。
@@ -132,6 +132,7 @@ main.go
 - UI 文案走 `$t('key', params)`；后端日志/Agent 结果使用 key + args；新增可见文案必须同步 `zh.js` 与 `en.js`。
 - 项目语言不可变；选择/创建项目时 UI 语言可跟随项目初始化，之后允许独立切换。
 - 使用 `@xianii/design-system` token。正文默认 16px；`text-sm` 用于紧凑控件，`text-xs` 仅用于元数据。
+- 长期视觉规范维护于根目录 `DESIGN.md` 与 `.impeccable/design.json`。应用壳层在 1280px 以上保持导航、工作区、助理三栏；低于 1280px 助理改抽屉，低于 1024px 导航也改抽屉，低于 768px 固定双栏编辑器顺序堆叠。顶栏项目标题不得截断，可自然折行；抽屉相对工作区定位，并具有遮罩、可见关闭操作和 reduced-motion 降级。图谱自动适配视口使用短时缓动，reduced-motion 直接应用最终镜头。
 - 全局平面风格：`--depth: 0`，无阴影；主要操作实心语义色，普通操作 `btn-outline`，弱操作 `btn-ghost`，危险操作 `btn-error btn-outline`。
 - `tabs-box` 是统一描边分段控件；活动项主色填充。正文段落 hover 淡底、点击选中，文字操作栏仅在选中后显示。
 - 中间工作区与助理约 2:1，助理宽 18–28rem；中间列必须 `min-w-0`，写作正文网格使用 `minmax(0, 1fr)`。

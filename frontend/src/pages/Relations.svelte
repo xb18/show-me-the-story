@@ -3,7 +3,7 @@
   import { api } from '../lib/api.js';
   import { settings } from '../lib/stores.js';
   import { t, uiLocale } from '../lib/i18n/index.js';
-  import { layoutParams, fitTransform, kineticEnergy } from '../lib/forceGraphLayout.js';
+  import { layoutParams, fitTransform, kineticEnergy, cameraFrame } from '../lib/forceGraphLayout.js';
 
   let canvas;
   let container;
@@ -29,6 +29,7 @@
       this.panY = 0;
       this.alpha = 1;
       this.needsFit = true;
+      this.cameraTransition = null;
       this.params = layoutParams(1);
       this.running = true;
       this.updateData(data);
@@ -104,14 +105,24 @@
       this.alpha = Math.max(this.alpha, minAlpha);
     }
     fitView() {
-      const t = fitTransform(this.nodes, this.canvas.width, this.canvas.height);
-      this.scale = t.scale;
-      this.panX = t.panX;
-      this.panY = t.panY;
+      const target = fitTransform(this.nodes, this.canvas.width, this.canvas.height);
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { Object.assign(this, target); return; }
+      this.cameraTransition = {
+        from: { scale: this.scale, panX: this.panX, panY: this.panY },
+        to: target,
+        start: performance.now(),
+      };
+    }
+    animateCamera(now) {
+      if (!this.cameraTransition) return;
+      const progress = (now - this.cameraTransition.start) / 320;
+      Object.assign(this, cameraFrame(this.cameraTransition.from, this.cameraTransition.to, progress));
+      if (progress >= 1) this.cameraTransition = null;
     }
     setupEvents() {
       const c = this.canvas;
       c.addEventListener('mousedown', e => {
+        this.cameraTransition = null;
         const r = c.getBoundingClientRect();
         const p = this.toWorld(e.clientX - r.left, e.clientY - r.top);
         for (let i = this.nodes.length - 1; i >= 0; i--) {
@@ -156,11 +167,13 @@
         this.panY = my - (my - this.panY) * (next / this.scale);
         this.scale = next;
         this.needsFit = false; // user took over the camera
+        this.cameraTransition = null;
       }, { passive: false });
     }
-    tick() {
+    tick(now = performance.now()) {
       if (!this.running) return;
       this.simulate();
+      this.animateCamera(now);
       this.draw();
       requestAnimationFrame(() => this.tick());
     }

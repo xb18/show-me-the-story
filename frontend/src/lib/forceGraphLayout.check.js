@@ -2,7 +2,7 @@
  * Self-check: node frontend/src/lib/forceGraphLayout.check.js
  */
 import assert from 'node:assert/strict';
-import { layoutParams, fitTransform, kineticEnergy } from './forceGraphLayout.js';
+import { layoutParams, fitTransform, kineticEnergy, cameraFrame } from './forceGraphLayout.js';
 
 const p8 = layoutParams(8);
 const p32 = layoutParams(32);
@@ -27,5 +27,9 @@ assert.equal(empty.scale, 1);
 
 assert.ok(kineticEnergy([{ vx: 3, vy: 4 }]) === 25);
 assert.equal(kineticEnergy([]), 0);
+
+const camera = cameraFrame({ scale: 1, panX: 0, panY: 0 }, { scale: 2, panX: 100, panY: 50 }, 0.5);
+assert.ok(camera.scale > 1.5 && camera.scale < 2);
+assert.deepEqual(cameraFrame({ scale: 1, panX: 0, panY: 0 }, { scale: 2, panX: 100, panY: 50 }, 1), { scale: 2, panX: 100, panY: 50 });
 
 console.log('forceGraphLayout.check: ok');
